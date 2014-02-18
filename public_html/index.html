@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="ChatApp">
+    <head>
+        <title>ChatApplication</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="angular.js/angular.js"></script>
+        <script src="jquery/jquery.js"></script>
+        <script src="main.js"></script>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+         <h1>Chat Application</h1>
+        <div ng-controller="ChatCtrl">
+            <div id="messageBoard">
+                <p ng-repeat="msg in msgs track by $index">{{msg}}</p>
+            </div>
+
+            <form ng-keypress="sendMsg()" class="msgInput" action="">
+                <input type="text" ng-model="msg.text"/>
+            </form> 
+        </div>
+    </body>
+</html>
