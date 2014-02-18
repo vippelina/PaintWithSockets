@@ -21,7 +21,7 @@ app.controller("ChatCtrl", function($scope, socket){
         //first argument is the action
         socket.emit("send msg", $scope.msg.text);
         //clear input field
-        //$scope.msg.text = "";
+        $scope.msg.text = "";
     };//send Msg function
     //this is where we catch the get msg from server
     socket.on("get msg", function(data){
