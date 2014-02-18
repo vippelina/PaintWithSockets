@@ -11,3 +11,11 @@ and open the template in the editor.
 #messageBoard{
     height: 300px;
 }
+
+#canvas{
+
+}
+
+body{
+    margin: 0px !important;
+}

@@ -11,7 +11,7 @@ var app = express()
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-server.listen(8763);
+server.listen(3000);
  
 app.use(express.static(__dirname + "/public_html"));
 app.use(express.static(__dirname + "/js/libs"));
@@ -24,5 +24,10 @@ io.sockets.on("connection", function(socket){
        io.sockets.emit("get msg", data); 
        //$scope.msg.text = "";
        //this will be catched bli client on its socket.on get msg
+    });
+    
+    //receives points
+    socket.on("send points", function(data){
+       io.sockets.emit("get points", data); 
     });
 });
