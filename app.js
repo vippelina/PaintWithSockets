@@ -26,7 +26,7 @@ io.sockets.on("connection", function(socket){
        //this will be catched bli client on its socket.on get msg
     });
     
-    //receives points
+    //receives points and sends them out to all connected sockets
     socket.on("send points", function(data){
        io.sockets.emit("get points", data); 
     });
