@@ -30,29 +30,40 @@ app.controller("ChatCtrl", function($scope, socket){
     //function draw points
     $scope.putPoint = function(event){
        if(isPressed){
-            //create object of position
-            var position = {};
-            position.x = event.offsetX;
-            position.y = event.offsetY;
-            socket.emit("send points", position);
+            //create object with position info
+            var eventInfo = {};
+            eventInfo.x = event.offsetX;
+            eventInfo.y = event.offsetY;
+            eventInfo.type = event.type;
+            socket.emit("send points", eventInfo);
        //send points to server
        }
+       
+       
     };
     
-    $scope.ablePaint = function(){
+    $scope.ablePaint = function(event){
         isPressed = true;
+       // context.moveTo(event.offsetX, event.offsetY);
+        $scope.putPoint(event);
     };
     
-    $scope.disablePaint = function(){
+    $scope.disablePaint = function(event){
         isPressed = false;
+     //   context.moveTo(event.offsetX, event.offsetY);
     };
     
     //get the points from server
     socket.on("get points", function(data){
+        //do not draw to if there was a click
+        if(data.type === "mousedown"){
+            context.beginPath();
+            context.moveTo(data.x, data.y);
+        }
        //draw line between the points
-       //context.lineWidth = radius*2;
+       context.lineWidth = linewidth;
        context.lineTo(data.x, data.y);
-       context.stroke;
+       context.stroke();
        //this is where we put the point
        context.beginPath();
        context.arc(data.x, data.y, radius, 0, Math.PI*2);
