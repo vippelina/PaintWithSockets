@@ -11,8 +11,8 @@ var app = express()
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-server.listen(5000);
- 
+server.listen(process.env.PORT || 5000);
+
 app.use(express.static(__dirname + "/public_html"));
 app.use(express.static(__dirname + "/js/libs"));
 
