@@ -9,7 +9,7 @@ var app = angular.module("ChatApp", []);
 //get a socket connection to server
 app.factory("socket", function(){
     console.log("socket function");
-    var socket = io.connect("http://localhost:3000");
+    var socket = io.connect("http://localhost:5000");
     return socket; 
 });
 
