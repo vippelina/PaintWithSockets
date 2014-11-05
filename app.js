@@ -15,7 +15,7 @@ server.listen(process.env.PORT || 5000);
 
 app.use(express.static(__dirname + "/public_html"));
 app.use(express.static(__dirname + "/js/libs"));
-
+//kim har bidragit!!
 io.sockets.on("connection", function(socket){
     console.log("in i sockets on connection, app.js");
     //here we catch the event thrown from client, with callback as second argument
