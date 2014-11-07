@@ -30,4 +30,21 @@ io.sockets.on("connection", function(socket){
     socket.on("send points", function(data){
        io.sockets.emit("get points", data); 
     });
+
+    socket.on("join", function(name){
+        people[socket.id] = name;
+        socket.emit("update", "You have connected to the server.");
+        socket.sockets.emit("update", name + " has joined the server.")
+        socket.sockets.emit("update-people", people);
+    });
+
+    socket.id = Math.floor(Math.random() * 1000);
+    socket.on('data', function(data) {
+        socket.write('ID: '+socket.id);
+    });
+
+    socket.on('chat message', function(msg){
+        io.sockets.emit('chat message', socket.id, msg);
+    });
 });
+

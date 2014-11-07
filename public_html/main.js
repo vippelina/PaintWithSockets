@@ -13,6 +13,12 @@ app.factory("socket", function(){
     return socket; 
 });
 
+
+var obj = {
+    user : 'user',
+    message : ''
+  };
+
 app.controller("ChatCtrl", function($scope, socket){ 
     //get the canvas, set it's width and get its context
     var canvas = $("#canvas")[0];
@@ -26,6 +32,7 @@ app.controller("ChatCtrl", function($scope, socket){
     var linewidth = radius*2;
     //variables to detect mouse behaviour
     var isPressed = false;
+
     
     //function draw points
     $scope.putPoint = function(event){
@@ -41,7 +48,24 @@ app.controller("ChatCtrl", function($scope, socket){
        
        
     };
-    
+
+    //form
+    $('form').submit(function(){
+        $scope.submitForm();
+    });
+
+     $scope.submitForm = function(event){
+        obj.message = $('#m').val();
+        socket.emit('chat message', obj);
+        $('#m').val('');
+        return false;
+     }
+     //chat
+    $scope.onChatUpdate = function (from, msg){
+      $('#chat').append($('<li>').text(from+" says: "+msg.message));
+      $('#chat').css('color', col); 
+    }
+
     $scope.ablePaint = function(event){
         isPressed = true;
        // context.moveTo(event.offsetX, event.offsetY);
@@ -52,10 +76,25 @@ app.controller("ChatCtrl", function($scope, socket){
         isPressed = false;
      //   context.moveTo(event.offsetX, event.offsetY);
     };
+
+    $scope.getRandomColor = function() {
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+      
+
+    //$scope.kimsVar = "HEJ JAG HETER KIM";
+    //$scope.objArr = [{namn: "Vippe", age: "21"}, {namn: "kim", age: "78"}, {namn: "Sara", age: "13"}];
+
     
     //get the points from server
     socket.on("get points", function(data){
         //do not draw to if there was a click
+        console.log('client on get points '+data);
         if(data.type === "mousedown"){
             context.beginPath();
             context.moveTo(data.x, data.y);
@@ -72,9 +111,14 @@ app.controller("ChatCtrl", function($scope, socket){
        context.beginPath();
        context.moveTo(data.x, data.y);
     });
-});
 
-$("#msgInput").submit(function(e){
-    $(this).find($("input")).text("");
-    e.preventDefault();
-  });
+
+    // get chat updates
+    socket.on("chat message", function(from, msg){
+        $scope.onChatUpdate(from, msg);      
+    });
+
+    socket.on('update', function(msg){
+      //$('#messages').append($('<li>').text(msg));
+    });
+});

@@ -10,13 +10,23 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="/socket.io/socket.io.js"></script>
+        
         <script src="angular.js/angular.js"></script>
         <script src="jquery/jquery.js"></script>
         <script src="main.js"></script>
+        
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <div ng-controller="ChatCtrl">      
+        <div ng-controller="ChatCtrl"> 
+            <ul id="chat"></ul>
+            <!--
+            <h1>{{kimsVar}}</h1>  
+            <input type="text" ng-model='kimsVar'/>  
+            <ul>
+                <li ng-repeat='obj in objArr'>{{obj.namn}} , {{obj.age}}</li>
+            </ul>
+            -->
             <!--now lets seif we can create a canvas with a mousedown event-->
             <canvas ng-mousemove="putPoint($event)" 
                     ng-mousedown="ablePaint($event)" 
@@ -24,6 +34,11 @@ and open the template in the editor.
                     id="canvas">
                 
             </canvas>
+
         </div>
+        
+        <form action="">
+          <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
     </body>
 </html>
