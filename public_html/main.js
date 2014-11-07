@@ -15,7 +15,7 @@ app.factory("socket", function(){
 
 
 var obj = {
-    user : 'user',
+    user : '',
     message : ''
   };
 
@@ -63,7 +63,7 @@ app.controller("ChatCtrl", function($scope, socket){
      //chat
     $scope.onChatUpdate = function (from, msg){
       $('#chat').append($('<li>').text(from+" says: "+msg.message));
-      $('#chat').css('color', col); 
+      //$('#chat').css('color', col); 
     }
 
     $scope.ablePaint = function(event){
